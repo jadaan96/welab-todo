@@ -1,91 +1,69 @@
 "use client"
-import { Grid, TextField, FormControl, IconButton, Checkbox, Snackbar, Alert, AlertTitle } from '@mui/material';
+import { Grid, TextField, FormControl, IconButton, Snackbar, Alert, AlertTitle, Typography, Box } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import { useEffect, useState } from 'react';
-import TodoListTable from '../components/todo/TodoList'
+import TodoListTable from '../components/todo/TodoList';
 import { v4 as randomUUID } from 'uuid';
-export default function Home() {
-    const [todoText, setTodoText] = useState('');
-    const [todos, setTodos] = useState([]);
-    const [showAlert, setShowAlert] = useState(false);
+import { Todo } from "../types";
 
-    const handleSubmit = (e) => {
+export default function Home() {
+    const [todoText, setTodoText] = useState<string>('');
+    const [todos, setTodos] = useState<Todo[]>([]);
+    const [showAlert, setShowAlert] = useState<boolean>(false);
+
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (!todoText.trim()) return; // Don't add empty todos
-        setTodos([...todos, { text: todoText, completed: false, id: randomUUID() }]);
+        const newTodo: Todo = { text: todoText, completed: false, id: randomUUID() };
+        setTodos([...todos, newTodo]);
         setTodoText('');
         // Show the alert
         setShowAlert(true);
-      };
-      useEffect(() => {
+    };
+
+    useEffect(() => {
         const storedTodos = localStorage.getItem('todos');
         
         if (storedTodos) {
-          setTodos(JSON.parse(storedTodos));
-          console.log(todos);
-
+            setTodos(JSON.parse(storedTodos));
         }
-      }, []);
+    }, []);
     
-      // Save todos to local storage whenever todos change
-      useEffect(() => {
-       localStorage.setItem('todos', JSON.stringify(todos));
-   
-      
-      }, [todos]);
+    // Save todos to local storage whenever todos change
+    useEffect(() => {
+        localStorage.setItem('todos', JSON.stringify(todos));
+    }, [todos]);
     
-    const handleChange = (e) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setTodoText(e.target.value);
     };
 
-    const handleToggleComplete = (index) => {
-        // Find the todo item with the given index
-        const updatedTodos = todos.map((todo) => {
-          if (todo.id === index) {
-            // Toggle the completion status
-            return { ...todo, completed: !todo.completed };
-          }
-          return todo;
-        });
-      
-        // Update the todos state with the updated array
-        setTodos(updatedTodos);
-      };
-
     return (
-        <Grid container spacing={2} columns={12}>
-            <Grid item xs={3}>
-                <form onSubmit={handleSubmit}>
-                    <FormControl fullWidth>
-                        <TextField
-                            id="todo-text"
-                            label="Add Todo"
-                            variant="outlined"
-                            size="small"
-                            autoFocus
-                            required
-                            value={todoText}
-                            onChange={handleChange}
-                        />
-                    </FormControl>
-                    <IconButton type="submit" aria-label="add">
-                        <AddIcon />
-                    </IconButton>
-                </form>
+        <Grid container spacing={2} justifyContent="center">
+            <Grid item xs={12} md={6}>
+                <Box p={3} boxShadow={3} bgcolor="background.paper" borderRadius={8}>
+                    <Typography variant="h5" gutterBottom>Add a New Todo</Typography>
+                    <form onSubmit={handleSubmit} style={{ display: 'flex', alignItems: 'center' }}>
+                        <FormControl fullWidth>
+                            <TextField
+                                id="todo-text"
+                                label="Enter your todo here"
+                                variant="outlined"
+                                size="small"
+                                autoFocus
+                                required
+                                value={todoText}
+                                onChange={handleChange}
+                            />
+                        </FormControl>
+                        <IconButton type="submit" aria-label="add">
+                            <AddIcon />
+                        </IconButton>
+                    </form>
+                </Box>
             </Grid>
-            <Grid item xs={9}>
-                {/* {todos.map((todo, index) => (
-                    <div key={index}>
-                        <Checkbox
-                            checked={todo.completed}
-                            onChange={() => handleToggleComplete(index)}
-                        />
-                        <span style={{ textDecoration: todo.completed ? 'line-through' : 'none' }}>
-                            {todo.text}
-                        </span>
-                    </div>
-                ))} */}
-                <TodoListTable todos={todos} setTodos={setTodos} handleToggleComplete={handleToggleComplete}/>
+            <Grid item xs={12} md={8}>
+                <TodoListTable todos={todos} setTodos={setTodos} />
             </Grid>
             <Snackbar
                 open={showAlert}
@@ -101,4 +79,3 @@ export default function Home() {
         </Grid>
     );
 }
-
