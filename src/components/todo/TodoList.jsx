@@ -103,7 +103,7 @@ export default function TodoListTable({ todos, setTodos }) {
                                         }}
                                         onClick={(event) =>
                                             handleClick(event, row.id)
-                                        }
+                                        }//
                                     >
                                         <TableCell padding="checkbox">
                                             <Checkbox
