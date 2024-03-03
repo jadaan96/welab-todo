@@ -7,7 +7,7 @@ import TableCell from '@mui/material/TableCell';
 import TableSortLabel from '@mui/material/TableSortLabel';
 
 function EnhancedTableHead(props) {
-  const { onSelectAllClick, numSelected, rowCount, onRequestSort } = props;
+  const { onSelectAllClick, numSelected, rowCount } = props;
   const headCells = [
     {
       id: 'name',
@@ -29,10 +29,7 @@ function EnhancedTableHead(props) {
     },
   ];
   
-  const createSortHandler = (property) => (event) => {
-    onRequestSort(event, property);
-  };
-
+ 
   return (
     <TableHead>
       <TableRow>
@@ -53,7 +50,7 @@ function EnhancedTableHead(props) {
             align={headCell.numeric ? 'right' : 'left'}
             padding={headCell.disablePadding ? 'none' : 'normal'}
           >
-            <TableSortLabel onClick={createSortHandler(headCell.id)}>
+            <TableSortLabel >
               {headCell.label}
             </TableSortLabel>
           </TableCell>
@@ -65,7 +62,6 @@ function EnhancedTableHead(props) {
 
 EnhancedTableHead.propTypes = {
   numSelected: PropTypes.number.isRequired,
-  onRequestSort: PropTypes.func.isRequired,
   onSelectAllClick: PropTypes.func.isRequired,
   rowCount: PropTypes.number.isRequired,
   headCells: PropTypes.arrayOf(

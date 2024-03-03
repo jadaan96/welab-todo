@@ -21,6 +21,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/components/todo/TodoList.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/components/todo/TodoList.js", "src/components/todo/TodoList.jsx", "src/components/todo/EnhancedTableToolbar.jsx", "src/components/todo/model.jsx", "src/components/todo/EnhancedTableHead.jsx"],
   "exclude": ["node_modules"]
 }

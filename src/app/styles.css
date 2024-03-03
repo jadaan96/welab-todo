@@ -1,0 +1,34 @@
+/* .container {
+    margin-bottom: 5rem;
+} */
+
+.headerContainer {
+    height: 10rem;
+    background: linear-gradient(to left bottom, #124076, #7F27FF);
+    position: relative;
+    margin-bottom: 5rem !important;
+}
+
+.headerTextContainer {
+    text-align: center;
+   
+}
+
+.headerText {
+    color: white;
+    font-weight: 600;
+    padding: 0;
+}
+
+.formContainer {
+    padding: 1rem;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+    background-color: #ffffff;
+    border-radius: 8px;
+    text-align: center;
+    position: absolute;
+    width: 63%;
+    top: 24%;
+    left: 50%;
+    transform: translate(-50%, 50%);
+}

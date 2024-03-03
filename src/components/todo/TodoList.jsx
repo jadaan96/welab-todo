@@ -13,11 +13,10 @@ import {
     Switch,
 } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
-import EditIcon from '@mui/icons-material/Edit';
 import EnhancedTableToolbar from './EnhancedTableToolbar';
 import EnhancedTableHead from './EnhancedTableHead';
 import { useTodoListController } from '../../controller/TodoListController';
-
+import BasicModal from './model'
 export default function TodoListTable({ todos, setTodos }) {
     const [selected, setSelected] = React.useState([]);
     const [page, setPage] = React.useState(0);
@@ -28,7 +27,6 @@ export default function TodoListTable({ todos, setTodos }) {
         handleDelete,
         stableSort,
         handleSelectAllClick,
-        handleToggleComplete,
         handleFilterChange,
         handleChangeDense,
         handleChangeRowsPerPage,
@@ -40,6 +38,10 @@ export default function TodoListTable({ todos, setTodos }) {
         setFiltterTodo,
         setSelected,
         selected,
+        setPage,
+        setDense,
+        setRowsPerPage,
+        filttertodo
     });
 
     const theme = useTheme();
@@ -61,7 +63,7 @@ export default function TodoListTable({ todos, setTodos }) {
 
     React.useEffect(() => {
         setFiltterTodo(visibleRows);
-    }, [visibleRows]);
+    }, [visibleRows,todos]);
 
     return (
         <Box sx={{ width: '100%' }}>
@@ -91,19 +93,15 @@ export default function TodoListTable({ todos, setTodos }) {
                                     <TableRow
                                         hover
                                         role="checkbox"
-                                        aria-checked={isItemSelected}
                                         tabIndex={-1}
                                         key={row.id}
-                                        selected={isItemSelected}
                                         sx={{ cursor: 'pointer' }}
                                         style={{
                                             backgroundColor: row.completed
-                                                ? theme.palette.success.main
-                                                : theme.palette.error.main,
+                                                ? '#01c851'
+                                                : '#ff4443',
                                         }}
-                                        onClick={(event) =>
-                                            handleClick(event, row.id)
-                                        }
+                                      
                                     >
                                         <TableCell padding="checkbox">
                                             <Checkbox
@@ -112,6 +110,11 @@ export default function TodoListTable({ todos, setTodos }) {
                                                 inputProps={{
                                                     'aria-labelledby': labelId,
                                                 }}
+                                                aria-checked={isItemSelected}
+                                                selected={isItemSelected}
+                                                onClick={(event) =>
+                                                    handleClick(event, row.id)
+                                                }
                                             />
                                         </TableCell>
                                         <TableCell
@@ -129,11 +132,10 @@ export default function TodoListTable({ todos, setTodos }) {
                                         </TableCell>
                                         <TableCell
                                             align="right"
-                                            onClick={() =>
-                                                handleToggleComplete(row.id)
-                                            }
+                                          
                                         >
-                                            <EditIcon />
+                                            <BasicModal row={row}  setTodos={setTodos} />
+                                          
                                         </TableCell>
                                     </TableRow>
                                 );
@@ -153,7 +155,7 @@ export default function TodoListTable({ todos, setTodos }) {
                 <TablePagination
                     rowsPerPageOptions={[5, 10, 25]}
                     component="div"
-                    count={todos.length}
+                    count={filttertodo.length}
                     rowsPerPage={rowsPerPage}
                     page={page}
                     onPageChange={handleChangePage}

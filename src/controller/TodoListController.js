@@ -1,14 +1,5 @@
-export const useTodoListController = ({ todos, setTodos, setFiltterTodo, setSelected, selected }) => {
-    const handleToggleComplete = (id) => {
-      const updatedTodos = todos.map((todo) => {
-        if (todo.id === id) {
-          return { ...todo, completed: !todo.completed };
-        }
-        return todo;
-      });
-  
-      setTodos(updatedTodos);
-    };
+export const useTodoListController = ({ todos, filttertodo,setTodos, setFiltterTodo, setSelected, selected,setPage ,setDense,setRowsPerPage}) => {
+ 
   
     const handleDelete = () => {
       const updatedTodos = todos.filter((todo) => !selected.includes(todo.id));
@@ -67,14 +58,13 @@ export const useTodoListController = ({ todos, setTodos, setFiltterTodo, setSele
       }
       const handleSelectAllClick = (event) => {
         if (event.target.checked) {
-          const newSelected = todos.map((n) => n.id);
+          const newSelected = filttertodo.map((n) => n.id);
           setSelected(newSelected);
           return;
         }
         setSelected([]);
       };
     return {
-      handleToggleComplete,
       handleDelete,
       handleFilterChange,
       handleChangeDense,

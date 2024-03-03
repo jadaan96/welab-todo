@@ -13,6 +13,7 @@ const theme = createTheme({
     fontFamily: roboto.style.fontFamily,
   },
   palette: {
+    // type: 'dark',
     primary: {
       light: '#757ce8',
       main: '#3f50b5',
@@ -26,12 +27,13 @@ const theme = createTheme({
       contrastText: '#000',
     },
     success: {
-        main: '#4caf50', // Change this color to match your theme
-      },
-      error: {
-        main: '#f44336', // Change this color to match your theme
-      },
+      main: '#4caf50',
+    },
+    error: {
+      main: '#f44336',
+    },
   },
 });
+
 
 export default theme;
