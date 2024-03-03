@@ -46,7 +46,8 @@ export default function Home() {
 
     return (
         <Paper sx={{ width: '100%' ,minHeight:"110vh",padding:"0",margin:"0"}}>
-          
+        
+                <title>WeLab ToDo </title> 
         <Grid container justifyContent="center" className="container">
             <Grid item xs={12} md={12} className="headerContainer">
                 <Box className="headerTextContainer">
