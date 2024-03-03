@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types'; // Add this import
 import Popover from '@mui/material/Popover';
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -11,8 +10,12 @@ import Tooltip from '@mui/material/Tooltip';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import DeleteConfirmationModal from './DeleteConfirmationModal'; // Import the modal component
+import {EnhancedTableToolbarProps} from "../../types"
+interface FilterOptionsProps {
+  onSelectFilter: (filter: string) => void;
+}
 
-const FilterOptions = ({ onSelectFilter }) => {
+const FilterOptions: React.FC<FilterOptionsProps> = ({ onSelectFilter }) => {
   return (
     <List>
       <ListItemButton onClick={() => onSelectFilter('all')}>
@@ -28,13 +31,14 @@ const FilterOptions = ({ onSelectFilter }) => {
   );
 };
 
-const EnhancedTableToolbar = (props) => {
+
+const EnhancedTableToolbar: React.FC<EnhancedTableToolbarProps> = (props) => {
   const { numSelected, onSelectFilter, onDelete } = props;
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
 
-  const [deleteConfirmation, setDeleteConfirmation] = React.useState(false);
+  const [deleteConfirmation, setDeleteConfirmation] = React.useState<boolean>(false);
 
-  const handleClick = (event) => {
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
 
@@ -56,9 +60,11 @@ const EnhancedTableToolbar = (props) => {
   return (
     <Toolbar
       sx={{
-        pl: { sm: 2 },
-        pr: { xs: 1, sm: 1 },
-        ...(numSelected > 0),
+        ...(numSelected > 0 ? {
+          pl: { sm: 2 },
+          pr: { xs: 1, sm: 1 },
+        } : {}),
+       
       }}
     >
       {numSelected > 0 ? (
@@ -73,7 +79,7 @@ const EnhancedTableToolbar = (props) => {
 
       {numSelected > 0 ? (
         <Tooltip title="Delete">
-          <IconButton onClick={() => handleDelete(numSelected)}>
+          <IconButton onClick={handleDelete}>
             <DeleteIcon />
           </IconButton>
         </Tooltip>
@@ -111,12 +117,6 @@ const EnhancedTableToolbar = (props) => {
 
     </Toolbar>
   );
-};
-
-EnhancedTableToolbar.propTypes = {
-  numSelected: PropTypes.number.isRequired,
-  onSelectFilter: PropTypes.func.isRequired,
-  onDelete: PropTypes.func.isRequired,
 };
 
 export default EnhancedTableToolbar;

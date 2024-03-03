@@ -1,13 +1,15 @@
 import React from 'react';
-import PropTypes from 'prop-types'; // Add this import
 import Checkbox from '@mui/material/Checkbox';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import TableCell from '@mui/material/TableCell';
 import TableSortLabel from '@mui/material/TableSortLabel';
+import {EnhancedTableHeadProps,HeadCell} from '../../types'
 
-function EnhancedTableHead(props) {
-  const { onSelectAllClick, numSelected, rowCount } = props;
+
+
+const EnhancedTableHead: React.FC<EnhancedTableHeadProps> = (props) => {
+  const { numSelected, rowCount, onSelectAllClick } = props;
   const headCells = [
     {
       id: 'name',
@@ -29,7 +31,6 @@ function EnhancedTableHead(props) {
     },
   ];
   
- 
   return (
     <TableHead>
       <TableRow>
@@ -50,7 +51,7 @@ function EnhancedTableHead(props) {
             align={headCell.numeric ? 'right' : 'left'}
             padding={headCell.disablePadding ? 'none' : 'normal'}
           >
-            <TableSortLabel >
+            <TableSortLabel>
               {headCell.label}
             </TableSortLabel>
           </TableCell>
@@ -58,20 +59,6 @@ function EnhancedTableHead(props) {
       </TableRow>
     </TableHead>
   );
-}
-
-EnhancedTableHead.propTypes = {
-  numSelected: PropTypes.number.isRequired,
-  onSelectAllClick: PropTypes.func.isRequired,
-  rowCount: PropTypes.number.isRequired,
-  headCells: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      numeric: PropTypes.bool.isRequired,
-      disablePadding: PropTypes.bool.isRequired,
-      label: PropTypes.string.isRequired,
-    })
-  ).isRequired,
 };
 
 export default EnhancedTableHead;

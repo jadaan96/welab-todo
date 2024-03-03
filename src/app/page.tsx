@@ -1,17 +1,18 @@
 "use client"
 import React, { useEffect, useState } from 'react';
-import { Grid, TextField, FormControl, IconButton, Snackbar, Alert, AlertTitle, Typography, Box } from '@mui/material';
+import { Grid, TextField, FormControl, useTheme, IconButton, Snackbar, Alert, AlertTitle, Typography, Box } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import TodoListTable from '../components/todo/TodoList';
 import { v4 as randomUUID } from 'uuid';
 import { Todo } from '../types';
+import {  Paper} from '@mui/material';
 import './styles.css'; // Import the CSS file
 
 export default function Home() {
     const [todoText, setTodoText] = useState<string>('');
     const [todos, setTodos] = useState<Todo[]>([]);
     const [showAlert, setShowAlert] = useState<boolean>(false);
-
+    const theme = useTheme();
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (!todoText.trim()) return; // Don't add empty todos
@@ -44,17 +45,20 @@ export default function Home() {
     };
 
     return (
-        <Grid container spacing={2} justifyContent="center" className="container">
+        <Paper sx={{ width: '100%' ,minHeight:"110vh",padding:"0",margin:"0"}}>
+          
+        <Grid container justifyContent="center" className="container">
             <Grid item xs={12} md={12} className="headerContainer">
                 <Box className="headerTextContainer">
                     <Typography variant="h3" className="headerText">ToDo App</Typography>
                 </Box>
-                <Box className="formContainer">
+                <Box  className= {theme.palette.mode === 'dark' ? 'formContainer2' : 'formContainer'} >
                     <Typography variant="h5" gutterBottom>
                         Add a New Todo
                     </Typography>
+                    <Paper>
                     <form onSubmit={handleSubmit} style={{ display: 'flex', alignItems: 'center' }}>
-                        <FormControl fullWidth>
+                         <FormControl fullWidth>
                             <TextField
                                 id="todo-text"
                                 label="Enter your todo here"
@@ -64,12 +68,17 @@ export default function Home() {
                                 required
                                 value={todoText}
                                 onChange={handleChange}
-                            />
+                                InputProps={{ className: theme.palette.mode === 'dark' ? 'dark' : 'light' }}
+                                />
                         </FormControl>
-                        <IconButton type="submit" aria-label="add">
+                 
+                        <IconButton type="submit" aria-label="add" >
                             <AddIcon />
+                            
                         </IconButton>
                     </form>
+                    
+                    </Paper>
                 </Box>
             </Grid>
             <Grid item xs={12} md={8}>
@@ -87,5 +96,6 @@ export default function Home() {
                 </Alert>
             </Snackbar>
         </Grid>
+        </Paper>
     );
 }

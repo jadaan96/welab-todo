@@ -1,11 +1,13 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import {DeleteConfirmationModalProps} from '../../types'
 
-const DeleteConfirmationModal = ({ open, onClose, onConfirmDelete }) => {
+
+
+const DeleteConfirmationModal: React.FC<DeleteConfirmationModalProps> = ({ open, onClose, onConfirmDelete }) => {
   return (
     <Modal open={open} onClose={onClose}>
       <Box
@@ -37,12 +39,6 @@ const DeleteConfirmationModal = ({ open, onClose, onConfirmDelete }) => {
       </Box>
     </Modal>
   );
-};
-
-DeleteConfirmationModal.propTypes = {
-  open: PropTypes.bool.isRequired,
-  onClose: PropTypes.func.isRequired,
-  onConfirmDelete: PropTypes.func.isRequired,
 };
 
 export default DeleteConfirmationModal;

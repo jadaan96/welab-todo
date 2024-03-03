@@ -7,34 +7,40 @@ import TextField from '@mui/material/TextField';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import EditIcon from '@mui/icons-material/Edit';
+import {Todo,BasicModalProps} from '../../types'
 
-const style = {
+
+
+
+const style: React.CSSProperties = {
   position: 'absolute',
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
   width: 400,
-  bgcolor: '#ffffff',
-  boxShadow: 24,
+  backgroundColor: '#ffffff', // Use backgroundColor instead of bgcolor
+  boxShadow: '0px 3px 6px rgba(0, 0, 0, 0.16)', // Example boxShadow value
   borderRadius: 8,
-  p: 4,
+  padding: 4, // Use padding instead of p
 };
 
-const buttonStyle = {
+
+const buttonStyle: React.CSSProperties = {
   margin: '0 8px',
 };
 
-export default function BasicModal({row,setTodos,todos}) {
-  const [open, setOpen] = React.useState(false);
-  const [data, setData] = React.useState(row);
+const BasicModal: React.FC<BasicModalProps> = ({ row, setTodos }) => {
+  const [open, setOpen] = React.useState<boolean>(false);
+  const [data, setData] = React.useState<Todo>(row);
+
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const handleInputChange = (event) => setData({ ...data, text: event.target.value });
-  const handleCheckboxChange = (event) => setData({ ...data, completed: event.target.checked });
-  const handleCancel = () => {
-    handleClose();
-  };
-  const handleEdit = (e) => {
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) =>
+    setData({ ...data, text: event.target.value });
+  const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) =>
+    setData({ ...data, completed: event.target.checked });
+  const handleCancel = () => handleClose();
+  const handleEdit = () => {
     setTodos(prevTodos => {
       const updatedTodos = prevTodos.map(todo => {
         if (todo.id === data.id) {
@@ -42,7 +48,7 @@ export default function BasicModal({row,setTodos,todos}) {
         }
         return todo;
       });
-      console.log(updatedTodos),"updatedTodos";
+      console.log(updatedTodos, "updatedTodos");
 
       return updatedTodos;
     });
@@ -51,8 +57,8 @@ export default function BasicModal({row,setTodos,todos}) {
 
   return (
     <div>
-      <Button onClick={handleOpen} >
-      <EditIcon />
+      <Button onClick={handleOpen}>
+        <EditIcon />
       </Button>
       <Modal
         open={open}
@@ -81,7 +87,11 @@ export default function BasicModal({row,setTodos,todos}) {
             <Button variant="contained" onClick={handleCancel} style={buttonStyle}>
               Cancel
             </Button>
-            <Button variant="contained" onClick={handleEdit} style={{ ...buttonStyle, backgroundColor: '#1976d2', color: '#ffffff' }}>
+            <Button
+              variant="contained"
+              onClick={handleEdit}
+              style={{ ...buttonStyle, backgroundColor: '#1976d2', color: '#ffffff' }}
+            >
               Edit
             </Button>
           </Box>
@@ -89,5 +99,6 @@ export default function BasicModal({row,setTodos,todos}) {
       </Modal>
     </div>
   );
-}
+};
 
+export default BasicModal;

@@ -1,20 +1,20 @@
-export const useTodoListController = ({ todos, filttertodo,setTodos, setFiltterTodo, setSelected, selected,setPage ,setDense,setRowsPerPage}) => {
+export const useTodoListController = ({ todos, filteredTodo,setTodos, setFilteredTodo, setSelected, selected,setPage ,setDense,setRowsPerPage}) => {
  
   
     const handleDelete = () => {
       const updatedTodos = todos.filter((todo) => !selected.includes(todo.id));
       setTodos(updatedTodos);
-      setFiltterTodo(updatedTodos);
+      setFilteredTodo(updatedTodos);
       setSelected([]);
     };
   
     const handleFilterChange = (filter) => {
       if (filter === 'completed') {
-        setFiltterTodo(todos.filter((el) => el.completed === true));
+        setFilteredTodo(todos.filter((el) => el.completed === true));
       } else if (filter === 'pending') {
-        setFiltterTodo(todos.filter((el) => el.completed === false));
+        setFilteredTodo(todos.filter((el) => el.completed === false));
       } else {
-        setFiltterTodo(todos);
+        setFilteredTodo(todos);
       }
     };
   
@@ -57,8 +57,9 @@ export const useTodoListController = ({ todos, filttertodo,setTodos, setFiltterT
         return stabilizedThis.map((el) => el[0]);
       }
       const handleSelectAllClick = (event) => {
+        console.log("click",event.target.checked);
         if (event.target.checked) {
-          const newSelected = filttertodo.map((n) => n.id);
+          const newSelected = filteredTodo.map((n) => n.id);
           setSelected(newSelected);
           return;
         }
