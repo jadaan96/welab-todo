@@ -29,15 +29,21 @@ export default function Home() {
 
     useEffect(() => {
         const storedTodos = localStorage.getItem('todos');
-
-        if (storedTodos) {
+    
+        if (storedTodos && todos.length === 0) { // Check if todos haven't been set yet
             setTodos(JSON.parse(storedTodos));
         }
     }, []);
 
     // Save todos to local storage whenever todos change
     useEffect(() => {
-        localStorage.setItem('todos', JSON.stringify(todos));
+        if(todos.length > 0){
+
+            localStorage.setItem('todos', JSON.stringify(todos));
+        }else{
+            localStorage.setItem('todos', []);
+
+        }
     }, [todos]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
