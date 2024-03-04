@@ -41,7 +41,7 @@ export default function Home() {
 
             localStorage.setItem('todos', JSON.stringify(todos));
         }else{
-            localStorage.setItem('todos', []);
+            localStorage.setItem('todos', '');
 
         }
     }, [todos]);
