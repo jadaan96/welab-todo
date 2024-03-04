@@ -9,19 +9,25 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import EditIcon from '@mui/icons-material/Edit';
 import {Todo,BasicModalProps} from '../../types'
 
-
-
-
-const style: React.CSSProperties = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  backgroundColor: '#ffffff', // Use backgroundColor instead of bgcolor
-  boxShadow: '0px 3px 6px rgba(0, 0, 0, 0.16)', // Example boxShadow value
-  borderRadius: 8,
-  padding: 4, // Use padding instead of p
+const getModalStyle = () => {
+  const width = window.innerWidth;
+  let modalWidth = '70%';
+  if (width <= 768) {
+    modalWidth = '50%';
+  } else if (width <= 480) {
+    modalWidth = '70%';
+  }
+  return {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: modalWidth,
+    backgroundColor: '#ffffff',
+    boxShadow: '0px 3px 6px rgba(0, 0, 0, 0.16)',
+    borderRadius: 8,
+    padding: 4,
+  };
 };
 
 
@@ -66,7 +72,7 @@ const BasicModal: React.FC<BasicModalProps> = ({ row, setTodos }) => {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
+        <Box sx={getModalStyle()}>
           <Typography id="modal-modal-title" variant="h6" component="h2" gutterBottom>
             Edit Text
           </Typography>
